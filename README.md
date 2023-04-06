@@ -1,7 +1,7 @@
-Commission Calculator
+Fee Calculator
 =====================
 
-This is a Symfony project that provides a commission calculator for transactions.
+This is a Symfony project that provides a fee calculator for transactions.
 
 Usage
 -----
@@ -21,7 +21,7 @@ Usage
 2.  Navigate to the project directory:
 
 
-    `cd commission_calculator`
+    `cd fee_calculator`
 
 3.  Install the project dependencies:
 
