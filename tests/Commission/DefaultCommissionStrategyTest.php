@@ -2,7 +2,7 @@
 
 namespace App\Tests\Commission;
 
-use App\Service\Commission\DefaultCommissionStrategy;
+use App\Service\CommissionStrategy\DefaultCommissionStrategy;
 use PHPUnit\Framework\TestCase;
 
 class DefaultCommissionStrategyTest extends TestCase

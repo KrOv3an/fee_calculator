@@ -16,7 +16,7 @@ Usage
 1.  Clone this repository:
 
 
-    `git clone https://github.com/KrOv3an/fee_calculator.git`
+    `git clone https://github.com/v-kolodii/fee_calculator.git`
 
 2.  Navigate to the project directory:
 
