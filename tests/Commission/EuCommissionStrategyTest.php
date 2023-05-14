@@ -2,7 +2,7 @@
 
 namespace App\Tests\Commission;
 
-use App\Service\Commission\EuCommissionStrategy;
+use App\Service\CommissionStrategy\EuCommissionStrategy;
 use PHPUnit\Framework\TestCase;
 
 class EuCommissionStrategyTest extends TestCase

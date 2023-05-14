@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Service\Commission;
 
 use App\DTO\TransactionDto;
+use App\Service\CommissionDecisionManager;
 use App\Service\Fetcher\UrlFetcherInterface;
-use App\Service\Helper\CountryHelper;
+use AutoMapperPlus\AutoMapperInterface;
 use AutoMapperPlus\Exception\UnregisteredMappingException;
 use InvalidArgumentException;
 use LogicException;
@@ -14,7 +15,6 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use AutoMapperPlus\AutoMapperInterface;
 
 class CommissionProcessor
 {
@@ -22,6 +22,7 @@ class CommissionProcessor
         private readonly ParameterBagInterface $parameterBag,
         private readonly UrlFetcherInterface $urlFetcher,
         private readonly AutoMapperInterface $mapper,
+        private readonly CommissionDecisionManager $decisionManager,
     ) {
     }
 
@@ -77,12 +78,8 @@ class CommissionProcessor
             $amountFixed = $transactionDto->getAmount() / $rate;
         }
 
-        $isEu = CountryHelper::isEu($binData['country']['alpha2']);
-        if ($isEu) {
-            $calculator = new CommissionCalculator(new EuCommissionStrategy());
-        } else {
-            $calculator = new CommissionCalculator(new DefaultCommissionStrategy());
-        }
+        $calculator = new CommissionCalculator($this->decisionManager->decide($binData['country']['alpha2']));
+
         $commission = $calculator->calculateCommission((float)$amountFixed);
 
         return round($commission, 2);

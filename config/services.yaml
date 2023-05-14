@@ -22,5 +22,13 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Service\CommissionStrategy:
+        resource: '../../Service/CommissionStrategy/*'
+        tags: [ 'commission_strategy' ]
+
+    App\Service\CommissionDecisionManager:
+        arguments:
+            - !tagged_iterator { tag: 'commission_strategy', index_by: 'key', default_index_method: 'getName' }
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
